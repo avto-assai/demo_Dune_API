@@ -25,6 +25,7 @@ public class DuneTests {
     @Test
     @DisplayName("Проверяем, что статус код 200")
     void checkStatus200() {
+        System.out.println("test");
         get(baseURI)
                 .then()
                 .statusCode(200);
