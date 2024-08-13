@@ -1,11 +1,9 @@
 package tests;
 
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -33,9 +31,13 @@ public class DuneTests {
     @Test
     @DisplayName("Проверяем, что список цитат не пуст")
     void getBooksTest() {
-        get("/quotes")
+        List<Object> response = get("/api/cats?limit=10")
                 .then()
-                .body("id", hasSize(greaterThan(0)));
+                .body("id", hasSize(greaterThan(0)))
+                .extract().as(new TypeRef<List<Object>>() {
+                });
+
+        Assertions.assertEquals(response.size(), 10);
     }
 
     @Disabled("Этот тест не будет запущен")
